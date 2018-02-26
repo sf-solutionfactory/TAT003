@@ -12,28 +12,21 @@ namespace WF002.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class USUARIO
+    public partial class PRESUPUESTOH
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public USUARIO()
+        public PRESUPUESTOH()
         {
-            this.MIEMBROS = new HashSet<MIEMBRO>();
-            this.PRESUPUESTOHs = new HashSet<PRESUPUESTOH>();
+            this.PRESUPUESTOPs = new HashSet<PRESUPUESTOP>();
         }
     
-        public string ID { get; set; }
-        public string PASS { get; set; }
-        public string NOMBRE { get; set; }
-        public string APELLIDO_P { get; set; }
-        public string APELLIDO_M { get; set; }
-        public string EMAIL { get; set; }
-        public string SPRAS_ID { get; set; }
-        public Nullable<bool> ACTIVO { get; set; }
+        public int ID { get; set; }
+        public string ANIO { get; set; }
+        public string USUARIO_ID { get; set; }
+        public Nullable<System.DateTime> FECHAC { get; set; }
     
+        public virtual USUARIO USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MIEMBRO> MIEMBROS { get; set; }
-        public virtual SPRA SPRA { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PRESUPUESTOH> PRESUPUESTOHs { get; set; }
+        public virtual ICollection<PRESUPUESTOP> PRESUPUESTOPs { get; set; }
     }
 }

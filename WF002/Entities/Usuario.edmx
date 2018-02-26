@@ -87,6 +87,34 @@
           <Property Name="ROL_ID" Type="int" Nullable="false" />
           <Property Name="PERMISO" Type="bit" />
         </EntityType>
+        <EntityType Name="PRESUPUESTOH">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ANIO" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ANIO" Type="nchar" MaxLength="4" Nullable="false" />
+          <Property Name="USUARIO_ID" Type="nvarchar" MaxLength="16" />
+          <Property Name="FECHAC" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PRESUPUESTOP">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ANIO" />
+            <PropertyRef Name="POS" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ANIO" Type="nchar" MaxLength="4" Nullable="false" />
+          <Property Name="POS" Type="int" Nullable="false" />
+          <Property Name="MES" Type="nchar" MaxLength="2" />
+          <Property Name="VERSION" Type="nvarchar" MaxLength="50" />
+          <Property Name="PAIS" Type="nvarchar" MaxLength="15" />
+          <Property Name="MONEDA" Type="nchar" MaxLength="2" />
+          <Property Name="MATERIAL" Type="nvarchar" MaxLength="18" />
+          <Property Name="BANNER" Type="nchar" MaxLength="6" />
+          <Property Name="CONCEPTO" Type="nvarchar" MaxLength="10" />
+          <Property Name="DATA" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="ROL">
           <Key>
             <PropertyRef Name="ID" />
@@ -381,6 +409,32 @@ advertencia 6002: La tabla o vista 'TAT001.dbo.PAGINAV' no tiene definida ningun
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PRESUPUESTOH_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="PRESUPUESTOH" Type="Self.PRESUPUESTOH" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRESUPUESTOH">
+              <PropertyRef Name="USUARIO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRESUPUESTOP_PRESUPUESTOH">
+          <End Role="PRESUPUESTOH" Type="Self.PRESUPUESTOH" Multiplicity="1" />
+          <End Role="PRESUPUESTOP" Type="Self.PRESUPUESTOP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRESUPUESTOH">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="ANIO" />
+            </Principal>
+            <Dependent Role="PRESUPUESTOP">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="ANIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TALL_GALL">
           <End Role="GALL" Type="Self.GALL" Multiplicity="0..1" />
           <End Role="TALL" Type="Self.TALL" Multiplicity="*" />
@@ -539,6 +593,8 @@ advertencia 6002: La tabla o vista 'TAT001.dbo.PAGINAV' no tiene definida ningun
           <EntitySet Name="PAGINA" EntityType="Self.PAGINA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PAGINAT" EntityType="Self.PAGINAT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PERMISO_PAGINA" EntityType="Self.PERMISO_PAGINA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRESUPUESTOH" EntityType="Self.PRESUPUESTOH" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRESUPUESTOP" EntityType="Self.PRESUPUESTOP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ROL" EntityType="Self.ROL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SPRAS" EntityType="Self.SPRAS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TALL" EntityType="Self.TALL" Schema="dbo" store:Type="Tables" />
@@ -616,6 +672,14 @@ advertencia 6002: La tabla o vista 'TAT001.dbo.PAGINAV' no tiene definida ningun
           <AssociationSet Name="FK_PERMISO_PAGINA_ROL" Association="Self.FK_PERMISO_PAGINA_ROL">
             <End Role="ROL" EntitySet="ROL" />
             <End Role="PERMISO_PAGINA" EntitySet="PERMISO_PAGINA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRESUPUESTOH_USUARIO" Association="Self.FK_PRESUPUESTOH_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="PRESUPUESTOH" EntitySet="PRESUPUESTOH" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRESUPUESTOP_PRESUPUESTOH" Association="Self.FK_PRESUPUESTOP_PRESUPUESTOH">
+            <End Role="PRESUPUESTOH" EntitySet="PRESUPUESTOH" />
+            <End Role="PRESUPUESTOP" EntitySet="PRESUPUESTOP" />
           </AssociationSet>
           <AssociationSet Name="FK_TALL_GALL" Association="Self.FK_TALL_GALL">
             <End Role="GALL" EntitySet="GALL" />
@@ -858,6 +922,7 @@ advertencia 6002: La tabla o vista 'TAT001.dbo.PAGINAV' no tiene definida ningun
           <Property Name="ACTIVO" Type="Boolean" />
           <NavigationProperty Name="MIEMBROS" Relationship="Self.FK_MIEMBROS_USUARIO" FromRole="USUARIO" ToRole="MIEMBROS" />
           <NavigationProperty Name="SPRA" Relationship="Self.FK_USUARIO_SPRAS" FromRole="USUARIO" ToRole="SPRAS" />
+          <NavigationProperty Name="PRESUPUESTOHs" Relationship="TAT001Model.FK_PRESUPUESTOH_USUARIO" FromRole="USUARIO" ToRole="PRESUPUESTOH" />
         </EntityType>
         <EntityType Name="WORKFH">
           <Key>
@@ -1321,6 +1386,16 @@ advertencia 6002: La tabla o vista 'TAT001.dbo.PAGINAV' no tiene definida ningun
           </AssociationSet>
           <EntitySet Name="PAGINAVs" EntityType="TAT001Model.PAGINAV" />
           <EntitySet Name="CARPETAVs" EntityType="TAT001Model.CARPETAV" />
+          <EntitySet Name="PRESUPUESTOHs" EntityType="TAT001Model.PRESUPUESTOH" />
+          <EntitySet Name="PRESUPUESTOPs" EntityType="TAT001Model.PRESUPUESTOP" />
+          <AssociationSet Name="FK_PRESUPUESTOH_USUARIO" Association="TAT001Model.FK_PRESUPUESTOH_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIOs" />
+            <End Role="PRESUPUESTOH" EntitySet="PRESUPUESTOHs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRESUPUESTOP_PRESUPUESTOH" Association="TAT001Model.FK_PRESUPUESTOP_PRESUPUESTOH">
+            <End Role="PRESUPUESTOH" EntitySet="PRESUPUESTOHs" />
+            <End Role="PRESUPUESTOP" EntitySet="PRESUPUESTOPs" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PAGINAV">
           <Key>
@@ -1352,6 +1427,63 @@ advertencia 6002: La tabla o vista 'TAT001.dbo.PAGINAV' no tiene definida ningun
           <Property Name="TXT50" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ICON" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="PRESUPUESTOH">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ANIO" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ANIO" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="true" />
+          <Property Name="USUARIO_ID" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="FECHAC" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="USUARIO" Relationship="TAT001Model.FK_PRESUPUESTOH_USUARIO" FromRole="PRESUPUESTOH" ToRole="USUARIO" />
+          <NavigationProperty Name="PRESUPUESTOPs" Relationship="TAT001Model.FK_PRESUPUESTOP_PRESUPUESTOH" FromRole="PRESUPUESTOH" ToRole="PRESUPUESTOP" />
+        </EntityType>
+        <EntityType Name="PRESUPUESTOP">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="ANIO" />
+            <PropertyRef Name="POS" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ANIO" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="true" />
+          <Property Name="POS" Type="Int32" Nullable="false" />
+          <Property Name="MES" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="VERSION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PAIS" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="MONEDA" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="MATERIAL" Type="String" MaxLength="18" FixedLength="false" Unicode="true" />
+          <Property Name="BANNER" Type="String" MaxLength="6" FixedLength="true" Unicode="true" />
+          <Property Name="CONCEPTO" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DATA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PRESUPUESTOH" Relationship="TAT001Model.FK_PRESUPUESTOP_PRESUPUESTOH" FromRole="PRESUPUESTOP" ToRole="PRESUPUESTOH" />
+        </EntityType>
+        <Association Name="FK_PRESUPUESTOH_USUARIO">
+          <End Type="TAT001Model.USUARIO" Role="USUARIO" Multiplicity="0..1" />
+          <End Type="TAT001Model.PRESUPUESTOH" Role="PRESUPUESTOH" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRESUPUESTOH">
+              <PropertyRef Name="USUARIO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRESUPUESTOP_PRESUPUESTOH">
+          <End Type="TAT001Model.PRESUPUESTOH" Role="PRESUPUESTOH" Multiplicity="1" />
+          <End Type="TAT001Model.PRESUPUESTOP" Role="PRESUPUESTOP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRESUPUESTOH">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="ANIO" />
+            </Principal>
+            <Dependent Role="PRESUPUESTOP">
+              <PropertyRef Name="ID" />
+              <PropertyRef Name="ANIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1600,6 +1732,33 @@ advertencia 6002: La tabla o vista 'TAT001.dbo.PAGINAV' no tiene definida ningun
                 <ScalarProperty Name="URL" ColumnName="URL" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRESUPUESTOHs">
+            <EntityTypeMapping TypeName="TAT001Model.PRESUPUESTOH">
+              <MappingFragment StoreEntitySet="PRESUPUESTOH">
+                <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+                <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+                <ScalarProperty Name="ANIO" ColumnName="ANIO" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRESUPUESTOPs">
+            <EntityTypeMapping TypeName="TAT001Model.PRESUPUESTOP">
+              <MappingFragment StoreEntitySet="PRESUPUESTOP">
+                <ScalarProperty Name="DATA" ColumnName="DATA" />
+                <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+                <ScalarProperty Name="BANNER" ColumnName="BANNER" />
+                <ScalarProperty Name="MATERIAL" ColumnName="MATERIAL" />
+                <ScalarProperty Name="MONEDA" ColumnName="MONEDA" />
+                <ScalarProperty Name="PAIS" ColumnName="PAIS" />
+                <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+                <ScalarProperty Name="MES" ColumnName="MES" />
+                <ScalarProperty Name="POS" ColumnName="POS" />
+                <ScalarProperty Name="ANIO" ColumnName="ANIO" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

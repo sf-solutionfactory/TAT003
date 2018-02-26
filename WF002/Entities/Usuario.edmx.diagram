@@ -50,6 +50,10 @@
         <AssociationConnector Association="TAT001Model.FK_WORKFT_WORKFV" ManuallyRouted="false" />
         <EntityTypeShape EntityType="TAT001Model.PAGINAV" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="TAT001Model.CARPETAV" Width="1.5" PointX="6.375" PointY="6.75" />
+        <EntityTypeShape EntityType="TAT001Model.PRESUPUESTOH" Width="1.5" PointX="5.25" PointY="30.75" />
+        <EntityTypeShape EntityType="TAT001Model.PRESUPUESTOP" Width="1.5" PointX="7.5" PointY="30.125" />
+        <AssociationConnector Association="TAT001Model.FK_PRESUPUESTOH_USUARIO" />
+        <AssociationConnector Association="TAT001Model.FK_PRESUPUESTOP_PRESUPUESTOH" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

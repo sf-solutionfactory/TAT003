@@ -47,5 +47,7 @@ namespace WF002.Entities
         public virtual DbSet<WORKFV> WORKFVs { get; set; }
         public virtual DbSet<PAGINAV> PAGINAVs { get; set; }
         public virtual DbSet<CARPETAV> CARPETAVs { get; set; }
+        public virtual DbSet<PRESUPUESTOH> PRESUPUESTOHs { get; set; }
+        public virtual DbSet<PRESUPUESTOP> PRESUPUESTOPs { get; set; }
     }
 }
