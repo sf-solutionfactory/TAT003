@@ -151,6 +151,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PAGINATsController.cs" />
     <Compile Include="Controllers\PresupuestoController.cs" />
     <Compile Include="Controllers\ProvisionController.cs" />
     <Compile Include="Entities\ACCION.cs">
@@ -184,6 +185,12 @@
       <DependentUpon>Usuario.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\PERMISO_PAGINA.cs">
+      <DependentUpon>Usuario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PRESUPUESTOH.cs">
+      <DependentUpon>Usuario.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PRESUPUESTOP.cs">
       <DependentUpon>Usuario.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\ROL.cs">
@@ -319,9 +326,15 @@
     <Content Include="Views\Provision\Index.cshtml" />
     <Content Include="Views\Presupuesto\Index.cshtml" />
     <Content Include="Views\Presupuesto\Carga.cshtml" />
+    <Content Include="Views\Paginast\Create.cshtml" />
+    <Content Include="Views\Paginast\Delete.cshtml" />
+    <Content Include="Views\Paginast\Details.cshtml" />
+    <Content Include="Views\Paginast\Edit.cshtml" />
+    <Content Include="Views\Paginast\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Catalogo\Paginas\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

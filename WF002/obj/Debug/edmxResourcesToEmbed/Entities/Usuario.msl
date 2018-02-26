@@ -246,5 +246,32 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PRESUPUESTOHs">
+      <EntityTypeMapping TypeName="TAT001Model.PRESUPUESTOH">
+        <MappingFragment StoreEntitySet="PRESUPUESTOH">
+          <ScalarProperty Name="FECHAC" ColumnName="FECHAC" />
+          <ScalarProperty Name="USUARIO_ID" ColumnName="USUARIO_ID" />
+          <ScalarProperty Name="ANIO" ColumnName="ANIO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PRESUPUESTOPs">
+      <EntityTypeMapping TypeName="TAT001Model.PRESUPUESTOP">
+        <MappingFragment StoreEntitySet="PRESUPUESTOP">
+          <ScalarProperty Name="DATA" ColumnName="DATA" />
+          <ScalarProperty Name="CONCEPTO" ColumnName="CONCEPTO" />
+          <ScalarProperty Name="BANNER" ColumnName="BANNER" />
+          <ScalarProperty Name="MATERIAL" ColumnName="MATERIAL" />
+          <ScalarProperty Name="MONEDA" ColumnName="MONEDA" />
+          <ScalarProperty Name="PAIS" ColumnName="PAIS" />
+          <ScalarProperty Name="VERSION" ColumnName="VERSION" />
+          <ScalarProperty Name="MES" ColumnName="MES" />
+          <ScalarProperty Name="POS" ColumnName="POS" />
+          <ScalarProperty Name="ANIO" ColumnName="ANIO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

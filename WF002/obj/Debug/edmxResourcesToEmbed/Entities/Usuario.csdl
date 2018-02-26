@@ -188,6 +188,7 @@
     <Property Name="ACTIVO" Type="Boolean" />
     <NavigationProperty Name="MIEMBROS" Relationship="Self.FK_MIEMBROS_USUARIO" FromRole="USUARIO" ToRole="MIEMBROS" />
     <NavigationProperty Name="SPRA" Relationship="Self.FK_USUARIO_SPRAS" FromRole="USUARIO" ToRole="SPRAS" />
+    <NavigationProperty Name="PRESUPUESTOHs" Relationship="TAT001Model.FK_PRESUPUESTOH_USUARIO" FromRole="USUARIO" ToRole="PRESUPUESTOH" />
   </EntityType>
   <EntityType Name="WORKFH">
     <Key>
@@ -651,6 +652,16 @@
     </AssociationSet>
     <EntitySet Name="PAGINAVs" EntityType="TAT001Model.PAGINAV" />
     <EntitySet Name="CARPETAVs" EntityType="TAT001Model.CARPETAV" />
+    <EntitySet Name="PRESUPUESTOHs" EntityType="TAT001Model.PRESUPUESTOH" />
+    <EntitySet Name="PRESUPUESTOPs" EntityType="TAT001Model.PRESUPUESTOP" />
+    <AssociationSet Name="FK_PRESUPUESTOH_USUARIO" Association="TAT001Model.FK_PRESUPUESTOH_USUARIO">
+      <End Role="USUARIO" EntitySet="USUARIOs" />
+      <End Role="PRESUPUESTOH" EntitySet="PRESUPUESTOHs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PRESUPUESTOP_PRESUPUESTOH" Association="TAT001Model.FK_PRESUPUESTOP_PRESUPUESTOH">
+      <End Role="PRESUPUESTOH" EntitySet="PRESUPUESTOHs" />
+      <End Role="PRESUPUESTOP" EntitySet="PRESUPUESTOPs" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="PAGINAV">
     <Key>
@@ -682,4 +693,61 @@
     <Property Name="TXT50" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="ICON" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
   </EntityType>
+  <EntityType Name="PRESUPUESTOH">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ANIO" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ANIO" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="true" />
+    <Property Name="USUARIO_ID" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+    <Property Name="FECHAC" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="USUARIO" Relationship="TAT001Model.FK_PRESUPUESTOH_USUARIO" FromRole="PRESUPUESTOH" ToRole="USUARIO" />
+    <NavigationProperty Name="PRESUPUESTOPs" Relationship="TAT001Model.FK_PRESUPUESTOP_PRESUPUESTOH" FromRole="PRESUPUESTOH" ToRole="PRESUPUESTOP" />
+  </EntityType>
+  <EntityType Name="PRESUPUESTOP">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="ANIO" />
+      <PropertyRef Name="POS" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ANIO" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="true" />
+    <Property Name="POS" Type="Int32" Nullable="false" />
+    <Property Name="MES" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+    <Property Name="VERSION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PAIS" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="MONEDA" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+    <Property Name="MATERIAL" Type="String" MaxLength="18" FixedLength="false" Unicode="true" />
+    <Property Name="BANNER" Type="String" MaxLength="6" FixedLength="true" Unicode="true" />
+    <Property Name="CONCEPTO" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="DATA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PRESUPUESTOH" Relationship="TAT001Model.FK_PRESUPUESTOP_PRESUPUESTOH" FromRole="PRESUPUESTOP" ToRole="PRESUPUESTOH" />
+  </EntityType>
+  <Association Name="FK_PRESUPUESTOH_USUARIO">
+    <End Type="TAT001Model.USUARIO" Role="USUARIO" Multiplicity="0..1" />
+    <End Type="TAT001Model.PRESUPUESTOH" Role="PRESUPUESTOH" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USUARIO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PRESUPUESTOH">
+        <PropertyRef Name="USUARIO_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PRESUPUESTOP_PRESUPUESTOH">
+    <End Type="TAT001Model.PRESUPUESTOH" Role="PRESUPUESTOH" Multiplicity="1" />
+    <End Type="TAT001Model.PRESUPUESTOP" Role="PRESUPUESTOP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PRESUPUESTOH">
+        <PropertyRef Name="ID" />
+        <PropertyRef Name="ANIO" />
+      </Principal>
+      <Dependent Role="PRESUPUESTOP">
+        <PropertyRef Name="ID" />
+        <PropertyRef Name="ANIO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>
