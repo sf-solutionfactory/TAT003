@@ -151,8 +151,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PaginaController.cs" />
-    <Compile Include="Controllers\PAGINATsController.cs" />
     <Compile Include="Controllers\PresupuestoController.cs" />
     <Compile Include="Controllers\ProvisionController.cs" />
     <Compile Include="Entities\ACCION.cs">
@@ -269,6 +267,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\flags\1x1\ec.svg" />
+    <Content Include="images\flags\1x1\mx.svg" />
+    <Content Include="images\flags\1x1\pr.svg" />
+    <Content Include="images\flags\4x3\ec.svg" />
+    <Content Include="images\flags\4x3\mx.svg" />
+    <Content Include="images\flags\4x3\pr.svg" />
     <Content Include="images\header-transient.png" />
     <Content Include="images\logo_kellogg.png" />
     <Content Include="images\sf-logo.jpg" />
@@ -327,12 +331,7 @@
     <Content Include="Views\Provision\Index.cshtml" />
     <Content Include="Views\Presupuesto\Index.cshtml" />
     <Content Include="Views\Presupuesto\Carga.cshtml" />
-    <Content Include="Views\PAGINATs\Create.cshtml" />
-    <Content Include="Views\PAGINATs\Delete.cshtml" />
-    <Content Include="Views\PAGINATs\Details.cshtml" />
-    <Content Include="Views\PAGINATs\Edit.cshtml" />
-    <Content Include="Views\PAGINATs\Index.cshtml" />
-    <Content Include="Views\Pagina\Index.cshtml" />
+    <Content Include="Views\Home\Pais.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
