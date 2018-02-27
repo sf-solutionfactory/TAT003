@@ -18,6 +18,30 @@
                 <a href="@Url.Action("Index", "Home")" class="brand-logo">
                     <img src="~/images/logo_kellogg.png" style="padding-top: 8px; padding-left: 8px;" />
                 </a>
+                <ul id="nav_mobile" class="right hide-on-med-and-down" runat="server">
+                    <li>
+                        <a href="#" class="waves-effect waves-block waves-light dropdown-trigger" data-target="country-dropdown">
+                            <input type="image" id="imgPais" src="@ViewBag.pais" style="width: 30px; height: 20px;" onclick="location.href='@Url.Action("Pais", "Home")';return false;" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="Logout">Salir</a>
+                    </li>
+                </ul>
+                <script>
+                    var elem = document.querySelector('.dropdown-trigger');
+                    var options = [];
+                    var instance = M.Dropdown.init(elem, options);
+
+                    //var image = "/images/flags/4x3/" + sessionStorage["pais"] + ".svg"
+                    //document.getElementById('menu_imgPais').src = image;
+
+                    //function cambiaPais(id) {
+                    //    var pais = id.split('-')[1];
+                    //    sessionStorage["pais"] = pais;
+                    //    document.getElementById('menu_imgPais').src = "/images/flags/4x3/" + pais + ".svg";
+                    //}
+                </script>
             </div>
         </nav>
     </div>

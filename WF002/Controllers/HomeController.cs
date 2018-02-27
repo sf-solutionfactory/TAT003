@@ -11,11 +11,13 @@ namespace WF002.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string pais)
         {
             using (TAT001Entities db = new TAT001Entities())
             {
                 string u = Session["UserID"].ToString();
+                Session["pais"] = pais;
+                ViewBag.pais = "~/images/flags/4x3/" + pais + ".svg";
                 var user = db.USUARIOs.Where(a => a.ID.Equals(u)).FirstOrDefault();
                 ViewBag.permisos = db.PAGINAVs.Where(a => a.ID.Equals(user.ID)).ToList();
                 ViewBag.carpetas = db.CARPETAVs.Where(a => a.USUARIO_ID.Equals(user.ID)).ToList();
@@ -31,6 +33,13 @@ namespace WF002.Controllers
                     return RedirectToAction("Pais", "Home");
                 }
             }
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SelPais(string pais)
+        {
+            Session["pais"] = pais;
             return View();
         }
 
