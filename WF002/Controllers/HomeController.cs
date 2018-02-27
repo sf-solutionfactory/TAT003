@@ -17,7 +17,7 @@ namespace WF002.Controllers
             {
                 string u = Session["UserID"].ToString();
                 Session["pais"] = pais;
-                ViewBag.pais = "~/images/flags/4x3/" + pais + ".svg";
+                ViewBag.pais = pais + ".svg";
                 var user = db.USUARIOs.Where(a => a.ID.Equals(u)).FirstOrDefault();
                 ViewBag.permisos = db.PAGINAVs.Where(a => a.ID.Equals(user.ID)).ToList();
                 ViewBag.carpetas = db.CARPETAVs.Where(a => a.USUARIO_ID.Equals(user.ID)).ToList();
